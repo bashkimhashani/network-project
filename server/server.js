@@ -67,3 +67,14 @@ if (c.role === "admin") {
 }
 
 });
+
+
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, c] of clients.entries()) {
+    if (now - c.lastSeen > TIMEOUT_MS) {
+      console.log(`[TIMEOUT] ${key} u shkepput.`);
+      clients.delete(key);
+    }
+  }
+}, 5000);
