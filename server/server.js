@@ -85,3 +85,8 @@ setInterval(() => {
     }
   }
 }, 5000);
+
+function reply(message, rinfo) {
+  const buf = Buffer.from(message);
+  server.send(buf, 0, buf.length, rinfo.port, rinfo.address);
+}
