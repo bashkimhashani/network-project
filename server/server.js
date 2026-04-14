@@ -56,4 +56,14 @@ if (text === "PING") {
 }
 
 
+if (c.role === "admin") {
+    handleCommand(text, rinfo);
+} else {
+    if (text.startsWith("/")) {
+        reply("SERVER: Nuk ke privilegje per komanda.", rinfo);
+    } else {
+        reply(`SERVER: Mesazhi u mor - "${text}"`, rinfo);
+    }
+}
+
 });
