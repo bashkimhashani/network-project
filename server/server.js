@@ -21,4 +21,17 @@ server.on("message", (msg, rinfo) => {
     if (!clients.has(key) && clients.size >= MAX_CLIENTS) {
         reply("SERVER: Lidhja u refuzua - klient maksimal arritur.", rinfo);
         return;
-    }})
+    }
+     if (!clients.has(key)) {
+        clients.set(key, {
+            ip: rinfo.address,
+            port: rinfo.port,
+            role: "read",
+            messages: [],
+            lastSeen: Date.now()
+        });
+
+        console.log(`[+] Klient i ri: ${key}`);
+        reply(`SERVER: U lidhe! Key: ${key}`, rinfo);
+    }
+});
