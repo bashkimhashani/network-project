@@ -44,4 +44,16 @@ if (text === "HELLO:admin") {
     return;
 }
 
+if (text === "HELLO:read") {
+    c.role = "read";
+    reply("SERVER: Roli READ u caktua.", rinfo);
+    return;
+}
+
+if (text === "PING") {
+    reply("PONG", rinfo);
+    return;
+}
+
+
 });
