@@ -37,6 +37,13 @@ server.on("message", (msg, rinfo) => {
     const c = clients.get(key);
 
 c.lastSeen = Date.now();
+c.messages.push(text);
+
+msgLog.push({
+  time: new Date().toISOString(),
+  from: key, role: c.role, msg: text
+});
+console.log(`[MSG] ${key} (${c.role}): ${text}`);
 
 if (text === "HELLO:admin") {
     c.role = "admin";
