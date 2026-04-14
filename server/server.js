@@ -34,4 +34,14 @@ server.on("message", (msg, rinfo) => {
         console.log(`[+] Klient i ri: ${key}`);
         reply(`SERVER: U lidhe! Key: ${key}`, rinfo);
     }
+    const c = clients.get(key);
+
+c.lastSeen = Date.now();
+
+if (text === "HELLO:admin") {
+    c.role = "admin";
+    reply("SERVER: Roli ADMIN u caktua.", rinfo);
+    return;
+}
+
 });
