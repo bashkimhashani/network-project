@@ -95,3 +95,8 @@ server.on("error", (err) => {
   console.error(`[ERROR] ${err.message}`);
   server.close();
 });
+
+server.on("listening", () => {
+  console.log(`UDP Server: port ${UDP_PORT}`);
+});
+server.bind(UDP_PORT);
