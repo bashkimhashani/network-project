@@ -80,6 +80,23 @@ function handleCommand(text, rinfo) {
   const cmd   = parts[0];
   const arg   = parts.slice(1).join(" ");
 
+  if(cmd === "/list"){
+    const files = fs.readdirSync(FILES_DIR);
+    reply(
+        files.length ? "FILES:\n" + files.join("\n") : "FILES: (bosh)",
+        rinfo  
+    );
+
+  } else if (cmd === "/read") {
+    try {
+        const content = fs.readFileSync(
+            path.join(FILES_DIR, arg), "udf8"
+        );
+        reply(`CONTENT:\n${content}`, rinfo);
+    } catch {
+        reply(`ERROR: "${arg}" nuk u gjet.`, rinfo)
+    }
+  }
 }
 
 
