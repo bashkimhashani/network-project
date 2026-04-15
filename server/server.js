@@ -75,6 +75,13 @@ if (c.role === "admin") {
 
 });
 
+function handleCommand(text, rinfo) {
+  const parts = text.trim().split(" ");
+  const cmd   = parts[0];
+  const arg   = parts.slice(1).join(" ");
+
+}
+
 
 setInterval(() => {
   const now = Date.now();
