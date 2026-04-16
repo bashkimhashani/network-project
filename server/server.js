@@ -73,6 +73,15 @@ function handleCommand(text,rinfo) {
       } catch {
         reply(`ERROR: Nuk u fshi "${arg}".`, rinfo);
       }
-    }
+      
+    }else if (cmd === "/search") { 
+    const results = fs.readdirSync(FILES_DIR)
+     .filter(f => f.includes(arg));
+      reply( results.length 
+        ? "MATCHES:\n" + results.join("\n")
+        : "SEARCH: Asnje rezultat.",
+         rinfo
+     );
+
   }
   
