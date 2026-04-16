@@ -63,11 +63,18 @@ if (i === -1) {
 reply("Sintaksa: /upload :", rinfo);
 return;
 }
-    }
+    
   fs.writeFileSync(
 path.join(FILES_DIR, arg.substring(0, i)),
 arg.substring(i + 1)
 );
 reply(`SERVER: "${arg.substring(0, i)}" u ngarkua.`, rinfo);
+} else if (cmd === "/delete") {
+try {
+fs.unlinkSync(path.join(FILES_DIR, arg));
+reply(`SERVER: "${arg}" u fshi.`, rinfo);
+} catch {
+reply(`ERROR: Nuk u fshi "${arg}".`, rinfo);
 }
+}}
   
