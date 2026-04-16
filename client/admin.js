@@ -26,3 +26,8 @@ client.bind(CLIENT_PORT, () => {
     console.log("================================\n");
     send("HELLO:admin");
 });
+
+setInterval(() => send("PING"), 10000);
+    client.on("error", (err) =>
+    console.error(`[ERROR] ${err.message}`)
+);
