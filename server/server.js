@@ -63,4 +63,11 @@ if (i === -1) {
 reply("Sintaksa: /upload :", rinfo);
 return;
 }
-    }}
+    }
+  fs.writeFileSync(
+path.join(FILES_DIR, arg.substring(0, i)),
+arg.substring(i + 1)
+);
+reply(`SERVER: "${arg.substring(0, i)}" u ngarkua.`, rinfo);
+}
+  
