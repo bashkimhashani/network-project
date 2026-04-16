@@ -34,6 +34,7 @@ server.on("message", (msg, rinfo) => {
         console.log(`[+] Klient i ri: ${key}`);
         reply(`SERVER: U lidhe! Key: ${key}`, rinfo);
     }
+    
 });
 function handleCommand(text,rinfo) {
     const parts = text.trim().split(" ");
@@ -45,5 +46,15 @@ function handleCommand(text,rinfo) {
              files.length ? "FILES:\n" + files.join("\n") : "FILES: (bosh)",
             rinfo
         );
+
+        } else if (cmd ==="/read") {
+            try {
+                const content = fs.readFileSync(
+                    path.join(FILES_DIR,arg),"utf8"
+                );
+                reply('CONTENT:\n $ {arg}',rinfo);
+            } catch {
+                reply('ERROR:"${arg}" nuk u gjet.',rinfo);
+            }
         }
     }
