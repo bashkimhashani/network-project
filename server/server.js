@@ -81,7 +81,18 @@ function handleCommand(text,rinfo) {
         ? "MATCHES:\n" + results.join("\n")
         : "SEARCH: Asnje rezultat.",
          rinfo
-     );
-
+         );
+    
+     } else if (cmd === "/info") { 
+        try { 
+        const s = fs.statSync(path.join(FILES_DIR, arg)); 
+        reply(
+        `INFO: ${arg}\n Madhesia: ${s.size} bytes\n` + 
+        ` Krijuar: ${s.birthtime.toLocaleString()}\n` + 
+        ` Modifikuar: ${s.mtime.toLocaleString()}`, 
+             rinfo
+             );
+             } catch { reply(`ERROR: "${arg}" nuk u gjet.`, rinfo); 
+            }
   }
   
