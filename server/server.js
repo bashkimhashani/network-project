@@ -57,4 +57,10 @@ function handleCommand(text,rinfo) {
                 reply('ERROR:"${arg}" nuk u gjet.',rinfo);
             }
         }
-    }
+         else if (cmd === "/upload") {
+const i = arg.indexOf(":");
+if (i === -1) {
+reply("Sintaksa: /upload :", rinfo);
+return;
+}
+    }}
