@@ -37,44 +37,42 @@ server.on("message", (msg, rinfo) => {
     
 });
 function handleCommand(text,rinfo) {
-    const parts = text.trim().split(" ");
-    const cmd = parts[0];
-    const arg = parts.slice(1).join(" ");
-    if (cmd ==="/list") {
-        const files = fs.readdirSync(FILES_DIR);
-        reply (           
-             files.length ? "FILES:\n" + files.join("\n") : "FILES: (bosh)",
-            rinfo
-        );
+  const parts = text.trim().split(" ");
+  const cmd = parts[0];
+  const arg = parts.slice(1).join(" ");
 
-        } else if (cmd ==="/read") {
-            try {
-                const content = fs.readFileSync(
-                    path.join(FILES_DIR,arg),"utf8"
-                );
-                reply('CONTENT:\n $ {arg}',rinfo);
-            } catch {
-                reply('ERROR:"${arg}" nuk u gjet.',rinfo);
-            }
-        }
-         else if (cmd === "/upload") {
-const i = arg.indexOf(":");
-if (i === -1) {
-reply("Sintaksa: /upload :", rinfo);
-return;
-}
+  if (cmd ==="/list") {
+    const files = fs.readdirSync(FILES_DIR);
+    reply (files.length ? "FILES:\n" + files.join("\n") : "FILES: (bosh)", rinfo);
+
+  } else if (cmd ==="/read") {
+    try {
+      const content = fs.readFileSync(path.join(FILES_DIR,arg),"utf8");
+      reply('CONTENT:\n $ {arg}',rinfo);
+    } catch { reply('ERROR:"${arg}" nuk u gjet.',rinfo); }
+  
+  } else if (cmd === "/upload") {
+    const i = arg.indexOf(":");
+
+    if (i === -1) { 
+      reply("Sintaksa: /upload :", rinfo);
+      return;
+    }
     
-  fs.writeFileSync(
-path.join(FILES_DIR, arg.substring(0, i)),
-arg.substring(i + 1)
-);
-reply(`SERVER: "${arg.substring(0, i)}" u ngarkua.`, rinfo);
-} else if (cmd === "/delete") {
-try {
-fs.unlinkSync(path.join(FILES_DIR, arg));
-reply(`SERVER: "${arg}" u fshi.`, rinfo);
-} catch {
-reply(`ERROR: Nuk u fshi "${arg}".`, rinfo);
-}
-}}
+    fs.writeFileSync(
+      path.join(FILES_DIR, arg.substring(0, i)),
+      arg.substring(i + 1)
+    );
+
+    reply(`SERVER: "${arg.substring(0, i)}" u ngarkua.`, rinfo);
+  
+  } else if (cmd === "/delete") {
+      try {
+        fs.unlinkSync(path.join(FILES_DIR, arg));
+        reply(`SERVER: "${arg}" u fshi.`, rinfo);
+      } catch {
+        reply(`ERROR: Nuk u fshi "${arg}".`, rinfo);
+      }
+    }
+  }
   
