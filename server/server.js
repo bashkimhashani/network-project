@@ -82,6 +82,7 @@ function handleCommand(text,rinfo) {
         : "SEARCH: Asnje rezultat.",
          rinfo
          );
+         
     
      } else if (cmd === "/info") { 
         try { 
@@ -92,7 +93,19 @@ function handleCommand(text,rinfo) {
         ` Modifikuar: ${s.mtime.toLocaleString()}`, 
              rinfo
              );
-             } catch { reply(`ERROR: "${arg}" nuk u gjet.`, rinfo); 
-            }
+             } catch { reply(`ERROR: "${arg}" nuk u gjet.`, rinfo);  }
+
+
+     } else if (cmd === "/download") { 
+         try { 
+            const content = fs.readFileSync( 
+             path.join(FILES_DIR, arg), "utf8" 
+             );
+            reply(`DOWNLOAD:${arg}\n${content}`, rinfo);
+         } catch { reply(`ERROR: "${arg}" nuk u gjet.`, rinfo); }
+          } else { 
+              reply(`SERVER: Komanda e panjohur "${cmd}"`, rinfo); 
+             }
+
   }
   
