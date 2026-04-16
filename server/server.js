@@ -35,3 +35,15 @@ server.on("message", (msg, rinfo) => {
         reply(`SERVER: U lidhe! Key: ${key}`, rinfo);
     }
 });
+function handleCommand(text,rinfo) {
+    const parts = text.trim().split(" ");
+    const cmd = parts[0];
+    const arg = parts.slice(1).join(" ");
+    if (cmd ==="/list") {
+        const files = fs.readdirSync(FILES_DIR);
+        reply (           
+             files.length ? "FILES:\n" + files.join("\n") : "FILES: (bosh)",
+            rinfo
+        );
+        }
+    }
