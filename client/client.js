@@ -32,7 +32,9 @@ client.bind(CLIENT_PORT, () => {
   console.log("  Mund te dergosh vetem mesazhe");
   console.log("  Shkruaj 'exit' per te dale");
   console.log("================================\n");
-  send("HELLO:read");
+  setTimeout(() => {
+    send("HELLO:read");
+  }, 200);
 });
 
 

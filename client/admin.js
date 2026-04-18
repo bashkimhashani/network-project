@@ -29,7 +29,9 @@ client.bind(CLIENT_PORT, () => {
   console.log("  /download | /delete");
   console.log("  /search | /info | exit");
   console.log("================================\n");
-  send("HELLO:admin");
+  setTimeout(() => {
+    send("HELLO:admin");
+  }, 200);
 });
 
 // -- Input nga tastiera --
