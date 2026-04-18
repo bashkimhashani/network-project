@@ -81,13 +81,18 @@ function handleCommand(text,rinfo) {
         ? "MATCHES:\n" + results.join("\n")
         : "SEARCH: Asnje rezultat.",
          rinfo
+<<<<<<< Updated upstream
          );
          
     
+=======
+     );
+>>>>>>> Stashed changes
      } else if (cmd === "/info") { 
         try { 
         const s = fs.statSync(path.join(FILES_DIR, arg)); 
         reply(
+<<<<<<< Updated upstream
         `INFO: ${arg}\n Madhesia: ${s.size} bytes\n` + 
         ` Krijuar: ${s.birthtime.toLocaleString()}\n` + 
         ` Modifikuar: ${s.mtime.toLocaleString()}`, 
@@ -106,6 +111,15 @@ function handleCommand(text,rinfo) {
           } else { 
               reply(`SERVER: Komanda e panjohur "${cmd}"`, rinfo); 
              }
+=======
+             `INFO: ${arg}\n Madhesia: ${s.size} bytes\n` + 
+             ` Krijuar: ${s.birthtime.toLocaleString()}\n` + 
+             ` Modifikuar: ${s.mtime.toLocaleString()}`, 
+             rinfo
+             );
+             } catch { reply(`ERROR: "${arg}" nuk u gjet.`, rinfo); }
+>>>>>>> Stashed changes
 
+            
   }
   
