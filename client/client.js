@@ -24,6 +24,7 @@ client.on("message", (msg) => {
   rl.prompt();
 });
 
+
 // -- Nise klientin --
 client.bind(CLIENT_PORT, () => {
   console.log("================================");
@@ -33,3 +34,21 @@ client.bind(CLIENT_PORT, () => {
   console.log("================================\n");
   send("HELLO:read");
 });
+
+
+// -- Input nga tastiera --
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout, prompt: `${CLIENT_NAME}> ` });
+rl.prompt();
+
+rl.on("line", (line) => {
+  const input = line.trim();
+  if (!input) { rl.prompt(); return; }
+  if (input === "exit") { client.close(); process.exit(0); }
+  send(input);
+  rl.prompt();
+});
+
+// -- Mbaj lidhjen aktive me PING --
+setInterval(() => send("PING"), 10000);
+
+client.on("error", (err) => console.error(`[ERROR] ${err.message}`));
