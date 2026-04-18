@@ -23,3 +23,13 @@ client.on("message", (msg) => {
   console.log(`\n[SERVER] ${msg.toString()}\n`);
   rl.prompt();
 });
+
+// -- Nise klientin --
+client.bind(CLIENT_PORT, () => {
+  console.log("================================");
+  console.log(`  ${CLIENT_NAME} — READ ONLY`);
+  console.log("  Mund te dergosh vetem mesazhe");
+  console.log("  Shkruaj 'exit' per te dale");
+  console.log("================================\n");
+  send("HELLO:read");
+});
