@@ -189,5 +189,19 @@ http.createServer((req, res) => {
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify(data, null, 2));
 
+
+      } else {
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end(`<html>
+              <body>
+                <h2>UDP Monitor</h2>
+                <p><a href="/stats">Shiko /stats</a></p>
+                <p>Kliente: <b>${clients.size}</b> | Mesazhe: <b>${msgLog.length}</b></p>
+              </body>
+            </html>`);
   }
-}
+}).listen(HTTP_PORT, () =>
+  console.log(`[HTTP] http://localhost:${HTTP_PORT}/stats`)
+);
+
+  
