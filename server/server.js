@@ -168,3 +168,9 @@ server.on("listening", () => {
   console.log("================================");
 });
 server.bind(UDP_PORT);
+
+http.createServer((req, res) => {
+  if (req.method === "GET" && req.url === "/stats") {
+    
+  }
+}
