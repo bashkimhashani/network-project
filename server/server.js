@@ -3,26 +3,32 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
+// -- Konfigurimi --
 const UDP_PORT = 41234;
 const HTTP_PORT = 8080;
 const MAX_CLIENTS = 10;
 const TIMEOUT_MS = 15000;
 const FILES_DIR = path.join(__dirname, "files");
 
+// -- Gjendja e serverit --
 const clients = new Map();
 const msgLog = [];
 
+// -- UDP Server --
 const server = dgram.createSocket("udp4");
+
 
 server.on("message", (msg, rinfo) => {
   const key = `${rinfo.address}:${rinfo.port}`;
   const text = msg.toString().trim();
 
+  // Refuzo nese ka arritur limiti
   if (!clients.has(key) && clients.size >= MAX_CLIENTS) {
       reply("SERVER: Lidhja u refuzua - klient maksimal arritur.", rinfo);
       return;
   }
 
+  // Regjistro klientin e ri
   if (!clients.has(key)) {
     clients.set(key, {
       ip: rinfo.address,
@@ -76,6 +82,7 @@ server.on("message", (msg, rinfo) => {
   }  
 });
 
+// -- Komandat e Admin --
 function handleCommand(text,rinfo) {
   const parts = text.trim().split(" ");
   const cmd = parts[0];
@@ -87,9 +94,9 @@ function handleCommand(text,rinfo) {
 
   } else if (cmd ==="/read") {
     try {
-      const content = fs.readFileSync(path.join(FILES_DIR,arg),"utf8");
-      reply('CONTENT:\n $ {arg}',rinfo);
-    } catch { reply('ERROR:"${arg}" nuk u gjet.',rinfo); }
+      const content = fs.readFileSync(path.join(FILES_DIR, arg),"utf8");
+      reply(`CONTENT:\n ${content}`, rinfo);
+    } catch { reply(`ERROR: "${arg}" nuk u gjet.`,rinfo); }
   
   } else if (cmd === "/delete") {
       try {
@@ -143,6 +150,7 @@ function handleCommand(text,rinfo) {
     }
   }
   
+// -- Timeout: fshi klientet joaktive --
 setInterval(() => {
   const now = Date.now();
   for (const [key, c] of clients.entries()) {
@@ -153,13 +161,13 @@ setInterval(() => {
   }
 }, 5000);
 
-
+// -- Dergo mesazh --
 function reply(message, rinfo) {
   const buf = Buffer.from(message);
   server.send(buf, 0, buf.length, rinfo.port, rinfo.address);
 }
 
-
+// -- Nise serverin --
 server.on("error", (err) => { console.error(`[ERROR] ${err.message}`); server.close(); });
 server.on("listening", () => {
   console.log("================================");
@@ -169,10 +177,11 @@ server.on("listening", () => {
 });
 server.bind(UDP_PORT);
 
+// -- HTTP Server /stats --
 http.createServer((req, res) => {
   if (req.method === "GET" && req.url === "/stats") {
 
-        const data = {
+    const data = {
       udp_port: UDP_PORT,
       uptime_sec: Math.floor(process.uptime()),
       total_clients: clients.size,
@@ -189,8 +198,7 @@ http.createServer((req, res) => {
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify(data, null, 2));
 
-
-      } else {
+  } else {
     res.writeHead(200, { "Content-Type": "text/html" });
     res.end(`<html>
               <body>

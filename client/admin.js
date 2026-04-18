@@ -1,22 +1,27 @@
 const dgram    = require("dgram");
 const readline = require("readline");
 
+// -- Konfigurimi --
 const SERVER_IP   = "127.0.0.1";
 const SERVER_PORT = 41234;
 const CLIENT_PORT = 41235;
 
 const client = dgram.createSocket("udp4");
 
+// -- Dergo mesazh --
 function send(msg) {
   const buf = Buffer.from(msg);
   client.send(buf, 0, buf.length, SERVER_PORT, SERVER_IP);
 }
 
+// -- Merr pergjigje nga serveri --
 client.on("message", (msg) => {
   console.log(`\n[SERVER] ${msg.toString()}\n`);
   rl.prompt();
 });
 
+
+// -- Nise klientin --
 client.bind(CLIENT_PORT, () => {
   console.log("================================");
   console.log("  ADMIN CLIENT");
@@ -27,6 +32,7 @@ client.bind(CLIENT_PORT, () => {
   send("HELLO:admin");
 });
 
+// -- Input nga tastiera --
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -43,7 +49,8 @@ rl.on("line", (line) => {
     rl.prompt();
 });
 
-setInterval(() => send("PING"), 10000);
+// -- Mbaj lidhjen aktive me PING --
+setInterval(() => send("PING"), 50000);
 
 client.on("error", (err) =>
   console.error(`[ERROR] ${err.message}`)

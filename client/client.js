@@ -42,13 +42,22 @@ rl.prompt();
 
 rl.on("line", (line) => {
   const input = line.trim();
-  if (!input) { rl.prompt(); return; }
-  if (input === "exit") { client.close(); process.exit(0); }
+
+  if (!input) { 
+    rl.prompt(); 
+    return; 
+  }
+
+  if (input === "exit") {
+    client.close(); 
+    process.exit(0); 
+  }
+
   send(input);
   rl.prompt();
 });
 
 // -- Mbaj lidhjen aktive me PING --
-setInterval(() => send("PING"), 10000);
+setInterval(() => send("PING"), 50000);
 
 client.on("error", (err) => console.error(`[ERROR] ${err.message}`));
