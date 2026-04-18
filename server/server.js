@@ -171,6 +171,23 @@ server.bind(UDP_PORT);
 
 http.createServer((req, res) => {
   if (req.method === "GET" && req.url === "/stats") {
-    
+
+        const data = {
+      udp_port: UDP_PORT,
+      uptime_sec: Math.floor(process.uptime()),
+      total_clients: clients.size,
+      total_messages: msgLog.length,
+      clients: [...clients.entries()].map(([key, c]) => ({
+        key,
+        role: c.role,
+        messages: c.messages.length,
+        last_messages: c.messages.slice(-3)
+      })),
+      recent_messages: msgLog.slice(-10)
+    };
+
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(data, null, 2));
+
   }
 }
