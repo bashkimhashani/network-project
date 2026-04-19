@@ -1,20 +1,21 @@
 # My Project
-## Admin commands
-| Command | Description |
-|---------|-------------|
-| /list | List all files |
-| /read filename | Print file content |
-| /upload name:content | Create a file |
-| /delete filename | Delete a file |
-| /download filename | Download a file |
-| /search keyword | Search filenames |
-| /info filename | File size + dates |
+# UDP File Server
 
-## Running multiple read clients
-Change CLIENT_PORT and CLIENT_NAME per client:
-- Client 2: PORT=41236
-- Client 3: PORT=41237
-- Client 4: PORT=41238
+Një server UDP i ndërtuar në Node.js që mbështet disa klientë njëkohësisht me kontroll të aksesit bazuar në role. Një klient ka privilegje të plota admin ndërsa të tjerët janë vetëm-lexim. Një HTTP server paralel ofron monitorim në kohë reale.
 
-## HTTP monitor
-Visit http://localhost:8080/stats for JSON stats.
+**Protokoli:** UDP | **Gjuha:** JavaScript (Node.js) | **Min. pajisje:** 4
+
+---
+
+## Arkitektura
+
+| Komponenti | Skedari | Porti |
+| ---------------- | ----------- | ----- |
+| UDP Server | `server.js` | 41234 |
+| HTTP Monitor | `server.js` | 8080 |
+| Admin Klienti | `admin.js` | 41235 |
+| Klienti Lexues 2 | `client.js` | 41236 |
+| Klienti Lexues 3 | `client.js` | 41237 |
+| Klienti Lexues 4 | `client.js` | 41238 |
+
+---
