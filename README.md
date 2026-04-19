@@ -19,3 +19,23 @@ Një server UDP i ndërtuar në Node.js që mbështet disa klientë njëkohësis
 | Klienti Lexues 4 | `client.js` | 41238 |
 
 ---
+## Instalimi
+
+Nuk nevojiten paketa shtesë — përdoren vetëm modulet e integruara të Node.js (`dgram`, `http`, `fs`, `path`, `readline`).
+
+### Kërkesat
+
+- Node.js v14 ose më i ri
+- Të gjitha pajisjet duhet të jenë në të njëjtin rrjet lokal (ose e njëjta makinë për testim lokal)
+
+### Struktura e skedarëve
+
+```
+network-project/
+├── server.js
+├── admin.js
+├── client.js
+└── files/
+```
+
+---
